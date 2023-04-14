@@ -50,10 +50,10 @@ public class BirthdayPresents implements Runnable {
 
     // Amount of presents
     // Should work with up to Integer.MAX_VALUE
-    final static int numPresents = 5;
+    final static int numPresents = 500000;
 
     // Amount of servants
-    final static int numServants = 2;
+    final static int numServants = 4;
     final static Random rand = new Random();
 
     // HashSet that holds the unordered/unsorted bag of presents
@@ -135,6 +135,7 @@ public class BirthdayPresents implements Runnable {
                                     linkedList.head = iter;
                                     linkedList.count++;
                                 } else {
+                                    print("Thread #" + this.threadNum + ": looping through present chain");
                                     while (tempHead.next != null) {
                                         // Loop rightward through linkedlist until tempHead.next = null or tempHead.next.tagNumber > iter.tagNumber
                                         if (tempHead.next.tagNumber > iter.tagNumber) {
