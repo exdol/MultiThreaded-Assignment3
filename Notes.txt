@@ -1,0 +1,25 @@
+"Present" Class:
+- int tagNumber
+- AtomicBoolean PutInPresentChain
+- AtomicBoolean thankYouNoteGenerated
+- Present prev
+- Present next
+
+Unordered Bag:
+- A hashset of Present class objects, each with an incremented tag number (decided at start when presents are generated)
+- Being a hashset establishes no necessary order
+
+Present Chain:
+- Linked-List of (manually) sorted Present class objects
+
+"Thank you" Notes:
+- HashSet of strings saying ("Thank you for my present #" + present.tagNumber + "!")
+- Each time a thank you note is made, that present is removed from the present chain
+
+Servants/Threads:
+- if "Thank You Notes" hashset size() != 500k, do a random of 3 actions:
+1) If the unordered bag is not empty, place a present from it into the present chain and mark PutInPresentChain as true, otherwise do next loop. This is in consideration that it must be in sorted order inside the chain.
+2) If the present chain is not empty, select the first available present in the chain (because no order is
+specified as a requirement for withdrawing from the chain). If it is not marked (meaning no thread is currently writing a note for it), mark the thankYouNoteGenerated bool as true, remove the present from the chain, and finally generate the thank you note string, and add it to the notes hashset. If it is marked, check if next present exists and if it does, go to the next present until a present is found without being marked, then do the previously stated actions. If it doesn't exist, then move on to next loop.
+3) Call the minotaursRequest() method that will generate a random number between 1 - 500k that the servant will use to check if a present with that tagNumber is in the present chain (by looping through the linkedlist, perhaps by either end that starts with the closest value with the tagNumber desired). If found, output present found, if not, output present not found.
+- Otherwise, end
